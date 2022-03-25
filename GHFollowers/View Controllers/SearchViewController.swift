@@ -37,12 +37,11 @@ class SearchViewController: UIViewController {
         followerListVC.username = usernameTextField.text
         followerListVC.title = usernameTextField.text
         self.navigationController?.pushViewController(followerListVC, animated: true)
-        print("fug ma")
     }
     
     func configureLogoImageView() {
         view.addSubview(logoImageView)
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false // seems like always needed?
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false // always needed, for everything
         logoImageView.image = UIImage(named: "gh-logo")! // "stringly-typed", better as constant
         
         NSLayoutConstraint.activate([
