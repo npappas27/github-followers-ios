@@ -9,10 +9,12 @@ import UIKit
 
 class FollowerListViewController: UIViewController {
     
+    
     enum Section { case main }
     
     var username: String!
     var followers: [Follower] = [Follower]()
+    var filteredFollowers = [Follower]()
     var page = 1
     var hasMoreFollowers = true
     
@@ -29,6 +31,7 @@ class FollowerListViewController: UIViewController {
         configureCollectionView()
         getFollowers(username: username, page: page)
         configureDataSource()
+        configureSearchController()
     }
     
     func configureViewController() {
@@ -44,6 +47,15 @@ class FollowerListViewController: UIViewController {
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
     }
     
+    func configureSearchController() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search for a username"
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
     func getFollowers(username: String, page: Int) {
         self.showLoadingView()
         NetworkManager.shared.getFollowers(for: username, page: page) { [weak self] result in
@@ -54,7 +66,14 @@ class FollowerListViewController: UIViewController {
             case .success(let followers):
                 if followers.count < 100 { self.hasMoreFollowers = false }
                 self.followers.append(contentsOf: followers)
-                self.updateData()
+                
+                if self.followers.isEmpty {
+                    let message = "This user doesn't have any followers. Go follow them 😃"
+                    DispatchQueue.main.async {
+                        self.showEmptyStateView(with: message, in: self.view)
+                    }
+                }
+                self.updateData(on: self.followers)
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Bad stuff happened", message: error.rawValue, buttonTitle: "OK")
             }
@@ -69,10 +88,10 @@ class FollowerListViewController: UIViewController {
         })
     }
     
-    func updateData() {
+    func updateData(on followers: [Follower]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(self.followers)
+        snapshot.appendItems(followers)
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.dataSource.apply(snapshot, animatingDifferences: true)
@@ -92,5 +111,14 @@ extension FollowerListViewController: UICollectionViewDelegate {
             getFollowers(username: username, page: page)
         }
     }
+}
+
+extension FollowerListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let query = searchController.searchBar.text, !query.isEmpty else { return }
+        filteredFollowers = followers.filter { $0.login.lowercased().contains(query.lowercased()) }
+        updateData(on: filteredFollowers)
+    }
+    
     
 }
