@@ -27,6 +27,7 @@
 		082C867B27ED5173009B0A4A /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082C867A27ED5173009B0A4A /* ErrorMessage.swift */; };
 		082C867E27ED5B9E009B0A4A /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082C867D27ED5B9E009B0A4A /* FollowerCell.swift */; };
 		082C868027ED5C0B009B0A4A /* GFAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082C867F27ED5C0B009B0A4A /* GFAvatarImageView.swift */; };
+		082C868427EE3CE0009B0A4A /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082C868327EE3CE0009B0A4A /* UIHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		082C867A27ED5173009B0A4A /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		082C867D27ED5B9E009B0A4A /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		082C867F27ED5C0B009B0A4A /* GFAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFAvatarImageView.swift; sourceTree = "<group>"; };
+		082C868327EE3CE0009B0A4A /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				082C867A27ED5173009B0A4A /* ErrorMessage.swift */,
+				082C868327EE3CE0009B0A4A /* UIHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				082C866827ED3858009B0A4A /* GFContainerView.swift in Sources */,
 				082C864427EBE853009B0A4A /* AppDelegate.swift in Sources */,
 				082C867B27ED5173009B0A4A /* ErrorMessage.swift in Sources */,
+				082C868427EE3CE0009B0A4A /* UIHelper.swift in Sources */,
 				082C867827ED48B7009B0A4A /* NetworkManager.swift in Sources */,
 				082C865A27EBED73009B0A4A /* FavoriteListViewController.swift in Sources */,
 				082C864627EBE853009B0A4A /* SceneDelegate.swift in Sources */,
