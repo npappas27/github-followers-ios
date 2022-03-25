@@ -11,10 +11,14 @@ class FollowerListViewController: UIViewController {
     
     var username: String!
     var requestURL: String =  "https://api.github.com/users/" //npappas27
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.prefersLargeTitles = true
         // Do any additional setup after loading the view.
         
