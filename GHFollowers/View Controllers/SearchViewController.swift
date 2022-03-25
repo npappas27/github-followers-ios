@@ -1,10 +1,3 @@
-//
-//  SearchViewController.swift
-//  GHFollowers
-//
-//  Created by Nick Pappas on 3/23/22.
-//
-
 import UIKit
 
 class SearchViewController: UIViewController {

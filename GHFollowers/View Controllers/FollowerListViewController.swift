@@ -10,7 +10,6 @@ import UIKit
 class FollowerListViewController: UIViewController {
     
     var username: String!
-    var requestURL: String =  "https://api.github.com/users/" //npappas27
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -22,16 +21,15 @@ class FollowerListViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         // Do any additional setup after loading the view.
         
-        fetchData()
-    }
-    
-    func fetchData() {
-        let url = URL(string: (requestURL + username))
-        let dataTask = URLSession.shared.dataTask(with: url!) { data, _, error in
-            guard let data = data else { return }
-            print(data)
+        NetworkManager.shared.getFollowers(for: username, page: 1) { followers, errorMessage in
+            guard let followers = followers else {
+                self.presentGFAlertOnMainThread(title: "Bad Stuff Happened", message: errorMessage!, buttonTitle: "OK")
+                return
+            }
+            print("Followers.count = \(followers.count)")
+            print(followers)
+            
         }
-        dataTask.resume()
+        
     }
-
 }
