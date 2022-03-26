@@ -42,7 +42,6 @@ class UserInfoViewController: UIViewController {
                 self.presentGFAlertOnMainThread(title: "Erorr", message: error.rawValue, buttonTitle: "OK")
             }
         })
-        
     }
     
     
@@ -125,7 +124,4 @@ extension UserInfoViewController: UserInfoVCDelegate {
         followerListDelegate.didRequestFollowers(for: user.login)
         dismissVC()
     }
-
-    
-    
 }
