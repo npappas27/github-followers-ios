@@ -1,41 +1,54 @@
 import UIKit
 
 class UserInfoViewController: UIViewController {
+    
+    let headerView = UIView()
+    
     var username: String!
-    let followerLabel = GFTitleLabel(textAlignment: .center, fontSize: 24)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        configureTitle()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
         navigationItem.rightBarButtonItem = doneButton
+        layoutUI()
+
+        
         NetworkManager.shared.getUserInfo(username: username, completed: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let user):
-                print(user.avatarUrl)
-                break
+                DispatchQueue.main.async {
+                    self.add(childVC: GFUserInfoHeaderViewController(user: user), to: self.headerView)
+                }
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Erorr", message: error.rawValue, buttonTitle: "OK")
             }
         })
     }
     
-    @objc func dismissVC() {
-        self.dismiss(animated: true, completion: nil)
+    func layoutUI() {
+        view.addSubview(headerView)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.backgroundColor = .systemBackground
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 180)
+        ])
+//        let header = GFUserInfoHeaderViewController(user: us)
     }
     
-    private func configureTitle() {
-        view.addSubview(followerLabel)
-        followerLabel.text = username
-        followerLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            followerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            followerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            followerLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            followerLabel.heightAnchor.constraint(equalToConstant: 40)
-        ])
+    func add(childVC: UIViewController, to containerView: UIView) {
+        addChild(childVC)
+        containerView.addSubview(childVC.view)
+        childVC.view.frame = containerView.bounds
+        childVC.didMove(toParent: self)
+    }
+    
+    @objc func dismissVC() {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
