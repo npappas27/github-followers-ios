@@ -32,11 +32,17 @@ class FollowerListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         configureViewController()
         configureCollectionView()
         getFollowers(username: username, page: page)
         configureDataSource()
         configureSearchController()
+    }
+    
+    func setupNavigationBar() {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addFavoriteTapped))
+        navigationItem.rightBarButtonItem = addButton
     }
     
     func configureViewController() {
@@ -102,6 +108,31 @@ class FollowerListViewController: UIViewController {
             guard let self = self else { return }
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
+    }
+    
+    @objc func addFavoriteTapped() {
+        showLoadingView()
+        NetworkManager.shared.getUserInfo(username: username) { [weak self] result in
+            guard let self = self else { return }
+            self.removeLoadingView()
+            switch result {
+            case .success(let user):
+                let favorite = Follower(login: user.login, avatarUrl: user.avatarUrl)
+                PersistenceManager.updateWith(favorite: favorite, action: .add) { [weak self] error in
+                    guard let self = self else { return }
+                    guard error == nil else {
+                        self.presentGFAlertOnMainThread(title: "Oops", message: error!.rawValue, buttonTitle: "OK")
+                        return
+                    }
+                    self.presentGFAlertOnMainThread(title: "Success!", message: "You have successfully favorited this user 🎉", buttonTitle: "Hooray!")
+                }
+                break
+            case .failure(let error):
+                self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "OK")
+            }
+        }
+        print("sugmahh")
+        UserDefaults.standard.set([username], forKey: "FavoritedUsers")
     }
 }
 
