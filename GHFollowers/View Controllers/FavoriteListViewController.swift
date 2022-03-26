@@ -22,6 +22,7 @@ class FavoritesViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getFavorites()
     }
     
@@ -89,5 +90,19 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, F
         userInfoVC.username = favorites[indexPath.row].login
         userInfoVC.followerListDelegate = self
         present(userInfoVC, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        let favorite = favorites[indexPath.row]
+        favorites.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        PersistenceManager.updateWith(favorite: favorite, action: .remove, completed: { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                self.presentGFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Ok")
+            }
+        })
+        return
     }
 }
