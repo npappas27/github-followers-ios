@@ -11,11 +11,14 @@ class GFFollowerItemViewController: GFItemInfoViewController {
         itemInfoViewOne.set(itemInfoType: .followers, count: user.followers)
         itemInfoViewTwo.set(itemInfoType: .following, count: user.following)
         actionButton.setBackgroundColor(color: .systemGreen, title: "Get Followers")
-        actionButton.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
     }
     
-    @objc private func buttonPress() {
-        print("fug mah")
+    override func actionButtonTapped() {
+        guard user.followers > 0 else {
+            presentGFAlertOnMainThread(title: "No followers", message: "This user doesn't have any followers", buttonTitle: "OK")
+            return
+        }
+        userInfoDelegate.didTapGitFollowers(for: user)
     }
     
 }

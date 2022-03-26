@@ -12,11 +12,9 @@ class GFRepoItemVC: GFItemInfoViewController {
         itemInfoViewOne.set(itemInfoType: .repos, count: user.publicRepos)
         itemInfoViewTwo.set(itemInfoType: .gists, count: user.publicGists)
         actionButton.setBackgroundColor(color: .systemPurple, title: "GitHub Profile")
-        actionButton.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
     }
-    
-    @objc private func buttonPress() {
 
-        print("fug mah")
+    override func actionButtonTapped() {
+        userInfoDelegate.didTapGithubProfile(for: user)
     }
 }
