@@ -43,7 +43,7 @@ struct PersistenceManager {
         }
         do {
             let decoder = JSONDecoder()
-            var followers = try decoder.decode([Follower].self, from: favoritesData)
+            let followers = try decoder.decode([Follower].self, from: favoritesData)
             completed(.success(followers))
         } catch {
             completed(.failure(.unableToFavorite))

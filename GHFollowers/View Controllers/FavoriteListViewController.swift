@@ -15,20 +15,21 @@ class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .tertiarySystemBackground
-        layoutUI()
+        setupTable()
         setupConstraints()
         setupDelegate()
         getData()
     }
     
-    func layoutUI() {
+    func setupTable() {
         tableView = UITableView()
         view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(FavoriteCell.self, forCellReuseIdentifier: FavoriteCell.reuseID)
     }
     
     func setupConstraints() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+//        tableView.frame = view.bounds // does the same as the constraints
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -54,6 +55,11 @@ class FavoritesViewController: UIViewController {
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     
+    func setupDelegate() {
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = FavoriteCell(style: .default, reuseIdentifier: FavoriteCell.reuseID)
         cell.set(favorite: favorites[indexPath.row])
@@ -67,10 +73,11 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
-
     
-    func setupDelegate() {
-        tableView.delegate = self
-        tableView.dataSource = self
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let userInfoVC = UserInfoViewController()
+        userInfoVC.username = favorites[indexPath.row].login
+        present(userInfoVC, animated: true, completion: nil)
     }
 }
