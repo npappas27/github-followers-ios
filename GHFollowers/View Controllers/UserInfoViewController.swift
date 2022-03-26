@@ -5,12 +5,9 @@ class UserInfoViewController: UIViewController {
     let headerView = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
-    
     var itemViews: [UIView] = []
     
     var username: String!
-    var user: User!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,22 +27,23 @@ class UserInfoViewController: UIViewController {
             guard let self = self else { return }
             switch result {
             case .success(let user):
-                self.user = user
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     self.add(childVC: GFUserInfoHeaderViewController(user: user), to: self.headerView)
+                    self.add(childVC: GFRepoItemVC(user: user), to: self.itemViewOne)
+                    self.add(childVC: GFFollowerItemViewController(user: user), to: self.itemViewTwo)
                 }
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Erorr", message: error.rawValue, buttonTitle: "OK")
             }
         })
-
+        
     }
     
     func layoutUI() {
         let padding: CGFloat = 20
         let itemHeight: CGFloat = 140
-
+        
         itemViews = [headerView, itemViewOne, itemViewTwo]
         itemViews.forEach { item in
             view.addSubview(item)
@@ -57,9 +55,7 @@ class UserInfoViewController: UIViewController {
         }
         
         headerView.backgroundColor = .systemBackground
-        itemViewOne.backgroundColor = .systemPink
-        itemViewTwo.backgroundColor = .systemBlue
-                
+        
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             headerView.heightAnchor.constraint(equalToConstant: 180),
@@ -75,11 +71,11 @@ class UserInfoViewController: UIViewController {
     }
     
     // this func does what child vc does, seems more practical.
-//    func configureHeader(user: User) {
-//        let vc = GFUserInfoHeaderViewController(user: user)
-//        vc.view.frame = headerView.bounds
-//        self.headerView.addSubview(vc.view)
-//    }
+    //    func configureHeader(user: User) {
+    //        let vc = GFUserInfoHeaderViewController(user: user)
+    //        vc.view.frame = headerView.bounds
+    //        self.headerView.addSubview(vc.view)
+    //    }
     
     func add(childVC: UIViewController, to containerView: UIView) {
         addChild(childVC)
