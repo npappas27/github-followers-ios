@@ -81,7 +81,10 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, F
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.favorites.count
+        if favorites.count == 0 {
+            self.showEmptyStateView(with: "No favorites?", in: self.view)
+        }
+        return self.favorites.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
