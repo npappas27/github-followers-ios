@@ -29,6 +29,7 @@
 		082C868027ED5C0B009B0A4A /* GFAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082C867F27ED5C0B009B0A4A /* GFAvatarImageView.swift */; };
 		082C868427EE3CE0009B0A4A /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082C868327EE3CE0009B0A4A /* UIHelper.swift */; };
 		082C868827EE7B9B009B0A4A /* GFEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082C868727EE7B9B009B0A4A /* GFEmptyStateView.swift */; };
+		082C868E27EE9862009B0A4A /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082C868D27EE9862009B0A4A /* UserInfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		082C867F27ED5C0B009B0A4A /* GFAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFAvatarImageView.swift; sourceTree = "<group>"; };
 		082C868327EE3CE0009B0A4A /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		082C868727EE7B9B009B0A4A /* GFEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFEmptyStateView.swift; sourceTree = "<group>"; };
+		082C868D27EE9862009B0A4A /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				082C865927EBED73009B0A4A /* FavoriteListViewController.swift */,
 				082C865F27ED1F3B009B0A4A /* FollowerListViewController.swift */,
 				082C865727EBED2F009B0A4A /* SearchViewController.swift */,
+				082C868D27EE9862009B0A4A /* UserInfoViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				082C866627ED29A4009B0A4A /* GFAlertViewController.swift in Sources */,
+				082C868E27EE9862009B0A4A /* UserInfoViewController.swift in Sources */,
 				082C865E27EC07C4009B0A4A /* GFTextField.swift in Sources */,
 				082C865827EBED2F009B0A4A /* SearchViewController.swift in Sources */,
 				082C865C27EC0515009B0A4A /* GFButton.swift in Sources */,
