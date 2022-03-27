@@ -7,11 +7,12 @@ enum PersistenceActionType {
 
 
 struct PersistenceManager {
-    static private let defaults = UserDefaults.standard
-    
+ 
     enum Keys {
         static let favorites = "favorites"
     }
+    
+    static let defaults = UserDefaults.standard
     
     static func updateWith(favorite: Follower, action: PersistenceActionType, completed: @escaping (GFError?) -> Void) {
         retrieveFavorites { result in
