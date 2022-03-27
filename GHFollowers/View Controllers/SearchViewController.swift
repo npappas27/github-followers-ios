@@ -5,6 +5,7 @@ class SearchViewController: UIViewController {
     var logoImageView = UIImageView()
     var usernameTextField = GFTextField()
     var callToActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers ")
+    var logoImageViewTopConstraint: NSLayoutConstraint!
     
     var isUsernameEntered: Bool { return !usernameTextField.text!.isEmpty }
     
@@ -20,6 +21,7 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+        self.usernameTextField.text = ""
     }
     
     func createDismissKeyboardtapGesture() {
@@ -33,19 +35,21 @@ class SearchViewController: UIViewController {
             presentGFAlertOnMainThread(title: "Empty username", message: "Please enter a username. We need to know who to look for 😃", buttonTitle: "OK")
             return
         }
-        let followerListVC = FollowerListViewController()
-        followerListVC.username = usernameTextField.text
-        followerListVC.title = usernameTextField.text
+        let followerListVC = FollowerListViewController(username: usernameTextField.text!)
         self.navigationController?.pushViewController(followerListVC, animated: true)
     }
     
     func configureLogoImageView() {
         view.addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false // always needed, for everything
-        logoImageView.image = UIImage(named: "gh-logo")! // "stringly-typed", better as constant
+        logoImageView.image = UIImage(named: "gh-logo") // "stringly-typed", better as constant
+        
+        let topConstraintConstant: CGFloat = (DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed) ? 10 : 80
+        
+        logoImageViewTopConstraint = logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topConstraintConstant)
+        logoImageViewTopConstraint.isActive = true
         
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
             logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoImageView.heightAnchor.constraint(equalToConstant: 200),
             logoImageView.widthAnchor.constraint(equalToConstant: 200) // generally want 4 constraints per object
