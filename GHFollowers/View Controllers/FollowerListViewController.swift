@@ -2,7 +2,6 @@ import UIKit
 
 class FollowerListViewController: DataLoadingViewController {
     
-    
     enum Section { case main }
     
     var username: String!
@@ -116,7 +115,7 @@ class FollowerListViewController: DataLoadingViewController {
     @objc func profileButtonTapped() {
         let userInfoVC = UserInfoViewController()
         userInfoVC.username = username
-        userInfoVC.followerListDelegate = self
+        userInfoVC.userInfoDelegate = self
         self.navigationController?.present(userInfoVC, animated: true, completion: nil)
     }
     
@@ -141,7 +140,6 @@ class FollowerListViewController: DataLoadingViewController {
                 self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "OK")
             }
         }
-        print("sugmahh")
         UserDefaults.standard.set([username], forKey: "FavoritedUsers")
     }
 }
@@ -163,7 +161,7 @@ extension FollowerListViewController: UICollectionViewDelegate {
         let activeArray = isSearching ? filteredFollowers : followers
         let follower = activeArray[indexPath.item]
         let userInfoVC = UserInfoViewController()
-        userInfoVC.followerListDelegate = self
+        userInfoVC.userInfoDelegate = self
         userInfoVC.username = follower.login
         let navC = UINavigationController(rootViewController: userInfoVC)
         present(navC, animated: true, completion: nil)
@@ -193,6 +191,7 @@ extension FollowerListViewController: UISearchResultsUpdating {
 
 extension FollowerListViewController: UserInfoVCDelegate {
     func didRequestFollowers(for username: String) {
+        print("follower vc!")
         self.username = username
         title = username
         resetScreen()

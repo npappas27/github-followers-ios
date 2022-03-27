@@ -57,6 +57,7 @@ class FavoritesViewController: DataLoadingViewController {
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, UserInfoVCDelegate {
     func didRequestFollowers(for username: String) {
+        print("favorites vc")
         let followerListVC = FollowerListViewController(username: username)
         navigationController?.pushViewController(followerListVC, animated: true)
     }
@@ -83,7 +84,7 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, U
         tableView.deselectRow(at: indexPath, animated: true)
         let userInfoVC = UserInfoViewController()
         userInfoVC.username = favorites[indexPath.row].login
-        userInfoVC.followerListDelegate = self
+        userInfoVC.userInfoDelegate = self
         present(userInfoVC, animated: true, completion: nil)
     }
     

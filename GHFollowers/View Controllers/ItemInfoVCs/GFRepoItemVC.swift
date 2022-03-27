@@ -7,7 +7,7 @@ protocol GFRepoItemVCDelegate: class {
 
 class GFRepoItemVC: GFItemInfoViewController {
     
-    weak var userInfoDelegate: GFRepoItemVCDelegate! // delegates need to be weak in order to avoid retain cycle
+    weak var repoItemDelegate: GFRepoItemVCDelegate! // delegates need to be weak in order to avoid retain cycle
 
     
     override func viewDidLoad() {
@@ -22,6 +22,6 @@ class GFRepoItemVC: GFItemInfoViewController {
     }
 
     override func actionButtonTapped() {
-        userInfoDelegate.didTapGithubProfile(for: user)
+        repoItemDelegate.didTapGithubProfile(for: user)
     }
 }

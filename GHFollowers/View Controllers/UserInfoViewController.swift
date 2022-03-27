@@ -13,7 +13,7 @@ class UserInfoViewController: UIViewController {
     var itemViews: [UIView] = []
     
     var username: String!
-    weak var followerListDelegate: UserInfoVCDelegate!
+    weak var userInfoDelegate: UserInfoVCDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,7 @@ class UserInfoViewController: UIViewController {
     
     func configureUIElements(with user: User) {
         let repoItemVC = GFRepoItemVC(user: user)
-        repoItemVC.userInfoDelegate = self
+        repoItemVC.repoItemDelegate = self
         
         let followerItemVC = GFFollowerItemViewController(user: user)
         followerItemVC.delegate = self
@@ -60,7 +60,7 @@ class UserInfoViewController: UIViewController {
     func layoutUI() {
         let padding: CGFloat = 20
         let itemHeight: CGFloat = 140
-                
+        
         itemViews = [headerView, itemViewOne, itemViewTwo, dateLabel]
         itemViews.forEach { item in
             view.addSubview(item)
@@ -110,7 +110,7 @@ class UserInfoViewController: UIViewController {
 }
 
 
-extension UserInfoViewController: GFRepoItemVCDelegate, GFFollowerItemVCDelegate {
+extension UserInfoViewController: GFRepoItemVCDelegate {
     func didTapGithubProfile(for user: User) {
         guard let url = URL(string: user.htmlUrl) else {
             presentGFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid.", buttonTitle: "OK")
@@ -118,9 +118,11 @@ extension UserInfoViewController: GFRepoItemVCDelegate, GFFollowerItemVCDelegate
         }
         presentSafariView(with: url)
     }
-    
+}
+
+extension UserInfoViewController: GFFollowerItemVCDelegate {
     func didTapGitFollowers(for user: User) {
-        followerListDelegate.didRequestFollowers(for: user.login)
+        userInfoDelegate.didRequestFollowers(for: user.login)
         dismissVC()
     }
 }
