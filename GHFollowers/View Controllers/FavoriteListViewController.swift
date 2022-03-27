@@ -55,7 +55,7 @@ class FavoritesViewController: DataLoadingViewController {
     }
 }
 
-extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, FollowerListVCDelegate {
+extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate, UserInfoVCDelegate {
     func didRequestFollowers(for username: String) {
         let followerListVC = FollowerListViewController(username: username)
         navigationController?.pushViewController(followerListVC, animated: true)

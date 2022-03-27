@@ -1,6 +1,13 @@
 import Foundation
 
+protocol GFFollowerItemVCDelegate: class {
+    func didTapGitFollowers(for user: User)
+}
+
+
 class GFFollowerItemViewController: GFItemInfoViewController {
+    
+    weak var delegate: GFFollowerItemVCDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +25,7 @@ class GFFollowerItemViewController: GFItemInfoViewController {
             presentGFAlertOnMainThread(title: "No followers", message: "This user doesn't have any followers", buttonTitle: "OK")
             return
         }
-        userInfoDelegate.didTapGitFollowers(for: user)
+        delegate.didTapGitFollowers(for: user)
     }
     
 }

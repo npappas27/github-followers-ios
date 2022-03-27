@@ -1,8 +1,7 @@
 import UIKit
 
 protocol UserInfoVCDelegate: class {
-    func didTapGithubProfile(for user: User)
-    func didTapGitFollowers(for user: User)
+    func didRequestFollowers(for username: String)
 }
 
 class UserInfoViewController: UIViewController {
@@ -14,7 +13,7 @@ class UserInfoViewController: UIViewController {
     var itemViews: [UIView] = []
     
     var username: String!
-    weak var followerListDelegate: FollowerListVCDelegate!
+    weak var followerListDelegate: UserInfoVCDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +49,7 @@ class UserInfoViewController: UIViewController {
         repoItemVC.userInfoDelegate = self
         
         let followerItemVC = GFFollowerItemViewController(user: user)
-        followerItemVC.userInfoDelegate = self
+        followerItemVC.delegate = self
         
         self.add(childVC: GFUserInfoHeaderViewController(user: user), to: self.headerView)
         self.add(childVC: repoItemVC, to: self.itemViewOne)
@@ -111,7 +110,7 @@ class UserInfoViewController: UIViewController {
 }
 
 
-extension UserInfoViewController: UserInfoVCDelegate {
+extension UserInfoViewController: GFRepoItemVCDelegate, GFFollowerItemVCDelegate {
     func didTapGithubProfile(for user: User) {
         guard let url = URL(string: user.htmlUrl) else {
             presentGFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid.", buttonTitle: "OK")
