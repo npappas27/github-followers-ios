@@ -45,8 +45,10 @@ class FollowerListViewController: DataLoadingViewController {
     }
     
     func setupNavigationBar() {
+        let profileButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(profileButtonTapped))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addFavoriteTapped))
-        navigationItem.rightBarButtonItem = addButton
+        
+        navigationItem.rightBarButtonItems = [addButton, profileButton]
     }
     
     func configureViewController() {
@@ -113,6 +115,13 @@ class FollowerListViewController: DataLoadingViewController {
             guard let self = self else { return }
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
+    }
+    
+    @objc func profileButtonTapped() {
+        let userInfoVC = UserInfoViewController()
+        userInfoVC.username = username
+        userInfoVC.followerListDelegate = self
+        self.navigationController?.present(userInfoVC, animated: true, completion: nil)
     }
     
     @objc func addFavoriteTapped() {
