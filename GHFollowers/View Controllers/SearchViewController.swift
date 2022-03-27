@@ -42,7 +42,7 @@ class SearchViewController: UIViewController {
     func configureLogoImageView() {
         view.addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false // always needed, for everything
-        logoImageView.image = UIImage(named: "gh-logo") // "stringly-typed", better as constant
+        logoImageView.image = Images.ghLogo // "stringly-typed", better as constant
         
         let topConstraintConstant: CGFloat = (DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed) ? 10 : 80
         

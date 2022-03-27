@@ -1,10 +1,3 @@
-//
-//  GFBodyLabel.swift
-//  GHFollowers
-//
-//  Created by Nick Pappas on 3/24/22.
-//
-
 import UIKit
 
 class GFBodyLabel: UILabel {

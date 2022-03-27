@@ -1,10 +1,3 @@
-//
-//  DataLoadingViewController.swift
-//  GHFollowers
-//
-//  Created by Nick Pappas on 3/27/22.
-//
-
 import UIKit
 
 fileprivate var containerView: UIView!
@@ -38,8 +31,8 @@ class DataLoadingViewController: UIViewController {
             activityIndicator.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
-                activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-                activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+                activityIndicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+                activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
             ])
             activityIndicator.startAnimating()
     }

@@ -1,10 +1,3 @@
-//
-//  GFTabViewController.swift
-//  GHFollowers
-//
-//  Created by Nick Pappas on 3/26/22.
-//
-
 import UIKit
 
 class GFTabViewController: UITabBarController {

@@ -1,10 +1,3 @@
-//
-//  GFEmptyStateViewController.swift
-//  GHFollowers
-//
-//  Created by Nick Pappas on 3/25/22.
-//
-
 import UIKit
 
 class GFEmptyStateView: UIView {
@@ -28,16 +21,10 @@ class GFEmptyStateView: UIView {
     }
     
     private func configure() {
-        addSubview(messageLabel)
         addSubview(logoImageView)
-        
-        messageLabel.numberOfLines = 3
-        messageLabel.textColor = .secondaryLabel
-        
-        messageLabel.layer.zPosition = 1
+        configureMessageLabel()
         logoImageView.layer.zPosition = 0
-        
-        logoImageView.image = UIImage(named: "empty-state-logo")
+        logoImageView.image = Images.emptyState
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -51,5 +38,12 @@ class GFEmptyStateView: UIView {
             logoImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 200),
             logoImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 40)
         ])
+    }
+    
+    private func configureMessageLabel() {
+        addSubview(messageLabel)
+        messageLabel.numberOfLines = 3
+        messageLabel.textColor = .secondaryLabel
+        messageLabel.layer.zPosition = 1
     }
 }

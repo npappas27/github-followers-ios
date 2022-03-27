@@ -1,15 +1,8 @@
-//
-//  GFAvatarImageView.swift
-//  GHFollowers
-//
-//  Created by Nick Pappas on 3/24/22.
-//
-
 import UIKit
 
 class GFAvatarImageView: UIImageView {
     let cache = NetworkManager.shared.cache
-    let placeholderImage = UIImage(named: "avatar-placeholder")!
+    let placeholderImage = Images.placeholder
     
     override init(frame: CGRect) {
         super.init(frame: frame)
