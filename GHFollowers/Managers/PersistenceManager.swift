@@ -17,20 +17,18 @@ struct PersistenceManager {
     static func updateWith(favorite: Follower, action: PersistenceActionType, completed: @escaping (GFError?) -> Void) {
         retrieveFavorites { result in
             switch result {
-            case .success(let favorites):
-                var retrievedFavs = favorites
-                
+            case .success(var favorites):
                 switch action {
                 case .add:
-                    guard !retrievedFavs.contains(favorite) else {
+                    guard !favorites.contains(favorite) else {
                         completed(.alreadyFavorited)
                         return
                     }
-                    retrievedFavs.append(favorite)
+                    favorites.append(favorite)
                 case .remove:
-                    retrievedFavs.removeAll { $0.login == favorite.login }
+                    favorites.removeAll { $0.login == favorite.login }
                 }
-                completed(saveFavorites(favorites: retrievedFavs))
+                completed(saveFavorites(favorites: favorites))
             case .failure(let error):
                 completed(error)
             }
